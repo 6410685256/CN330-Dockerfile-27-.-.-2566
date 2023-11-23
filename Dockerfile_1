@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y openssh-server
+RUN rm -rf /var/lib/apt/lists/*
+RUN useradd -r -m -d /home/cn330 \
+    -s /bin/bash -g root -G sudo -u 1000 cn330
+RUN echo 'cn330:1234' | chpasswd 
+RUN service ssh start
+
+CMD ["/usr/sbin/sshd", "-D"]
